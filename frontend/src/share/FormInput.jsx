@@ -10,7 +10,11 @@ function FormInput({
   min,
   step,
   accept,
-  disabled = false
+  disabled = false,
+  pattern,
+  minLength,
+  maxLength,
+  error
 }) {
   return (
     <fieldset className="fieldset w-full">
@@ -23,7 +27,7 @@ function FormInput({
           onChange={onChange}
           placeholder={placeholder}
           required={required}
-          className="textarea"
+          className={`textarea ${error ? "input-error" : ""}`}
         />
       ) : type === "select" ? (
         <select
@@ -31,7 +35,7 @@ function FormInput({
           value={value}
           onChange={onChange}
           required={required}
-          className="select"
+          className={`select ${error ? "select-error" : ""}`}
         >
           <option value="" disabled>
               {""}
@@ -62,8 +66,17 @@ function FormInput({
           required={required}
           min={min}
           step={step}
-          className="input"
+          pattern={pattern}
+          minLength={minLength}
+          maxLength={maxLength}
+          className={`input ${error ? "input-error" : ""}`}
         />
+      )}
+
+      {error && (
+        <p className="label text-error">
+          {error}
+        </p>
       )}
     </fieldset>
   );

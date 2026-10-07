@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAllBooks } from "../services/book.service";
 import { useNavigate } from "react-router-dom";
+import Chatbot from "../book/Chatbot";
 
 export default function Home() {
 	const [books, setBooks] = useState([]);
@@ -94,6 +95,7 @@ export default function Home() {
 					))}
 				</div>
 			)}
+			<Chatbot />
 		</div>
 	);
 }

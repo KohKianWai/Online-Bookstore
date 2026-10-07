@@ -34,3 +34,9 @@ export const readBook = (bookId) =>
 	axios.get(`${API_URL}/${bookId}/read`, {
 		responseType: "blob"
 	});
+
+export const ingestPDF = (formData) => axios.post(`${environment.fastApiUrl}/ingest-pdf`, formData);
+
+export const deleteBookVector = (bookId) => axios.delete(`${environment.fastApiUrl}/book/${bookId}`);
+
+export const updateBookVector = (bookId, formData) => axios.put(`${environment.fastApiUrl}/book/${bookId}`, formData);

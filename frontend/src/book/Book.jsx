@@ -2,7 +2,7 @@ import GenericForm from "../share/GenericForm";
 import { useState, useEffect } from "react";
 import FormModal from "../share/FormModal";
 import DataTable from "../share/DataTable";
-import { getAllBooks, getBookById, updateBook, deleteBook, createBook, uploadBookContent, uploadBookCoverImage } from "../services/book.service";
+import { getAllBooks, getBookById, updateBook, deleteBook, createBook, uploadBookContent, uploadBookCoverImage, ingestPDF, deleteBookVector, updateBookVector } from "../services/book.service";
 import { getAllAuthors } from "../services/author.service";
 import { getAllCategories } from "../services/category.service";
 
@@ -67,11 +67,13 @@ export default function Book(){
         },
         {
             name: "content",
-            label: "Book File (PDF/TXT)",
+            // label: "Book File (PDF/TXT)",
+            label: "Book File (PDF)",
             type: "file",
             required: true,
-            accept: ".pdf,.txt",
-            disabled: editingId ? true : false
+            // accept: ".pdf,.txt",
+            accept: ".pdf",
+            // disabled: editingId ? true : false
         },
         {
             name: "coverImage",
@@ -144,6 +146,8 @@ export default function Book(){
 
     const [form, setForm] = useState(bookDto)
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const filteredBooks = books.filter(book => book.name.toLowerCase().includes(searchValue.toLowerCase()));
 
     useEffect(() => {
@@ -200,6 +204,12 @@ export default function Book(){
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (isSubmitting) return;
+
+        setIsSubmitting(true);
+        const author = authors.find(author => author.id === form.authorId);
+        const category = categories.find(category => category.id === form.categoryId);
         if (editingId){
             await updateBook(editingId, {
                 name: form.name,
@@ -209,6 +219,13 @@ export default function Book(){
                 categoryId: form.categoryId,
                 price: form.price,
             })
+            const formData = new FormData();
+            formData.append("title", form.name);
+            formData.append("author", author.name);
+            formData.append("category", category.name);
+            formData.append("file", form.content);
+            await uploadBookContent(editingId, form.content);
+            await updateBookVector(editingId, formData);
             console.log("Updated!")
 
         } else {
@@ -224,6 +241,14 @@ export default function Book(){
             const createdBook = response.data
             await uploadBookContent(createdBook.id, form.content)
             await uploadBookCoverImage(createdBook.id, form.coverImage)
+
+            const formData = new FormData();
+            formData.append("bookId", createdBook.id)
+            formData.append("title", form.name);
+            formData.append("author", author.name);
+            formData.append("category", category.name);
+            formData.append("file", form.content);
+            await ingestPDF(formData);
             console.log("Created!")
         }
         const allBooks = await getAllBooks()
@@ -231,6 +256,7 @@ export default function Book(){
         clearForm()
         setEditingId(null)
         setIsModalOpen(false);
+        setIsSubmitting(false)
     }
 
     const handleUpdate = async (book) => {
@@ -249,9 +275,10 @@ export default function Book(){
         if (!ok) {
             return
         }
-        await deleteBook(book.id)
+        await deleteBook(book.id);
         const allBooks = await getAllBooks();
         setBooks(allBooks.data);
+        await deleteBookVector(book.id);
     }
 
     return (
@@ -284,6 +311,7 @@ export default function Book(){
                         values={form}
                         onChange={handleChange}
                         onSubmit={handleSubmit}
+                        disabled={isSubmitting}
                     ></GenericForm>
             </FormModal>
         </div>

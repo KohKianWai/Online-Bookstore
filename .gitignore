@@ -4,9 +4,11 @@ dist/
 
 # Backend
 target/
+__pycache__
 
 # Environment files
 .env
+venv
 
 # IDE files
 .idea/
