@@ -9,21 +9,44 @@ The application also integrates an Agentic Retrieval-Augmented Generation (RAG) 
 ### 1. Run the Spring Boot Backend
 
 Navigate to the backend directory:  
-`cd demo`
+```cd demo```
 
 Run the backend:  
-`.\mvnw.cmd spring-boot:run`
+```.\mvnw.cmd spring-boot:run```
 
 The Spring Boot API will typically run at:  
-`http://localhost:8080`
+```http://localhost:8080```
 
 ### 2. Configure the RAG Backend
 
 Navigate to the RAG directory:  
-> cd rag-backend
+```cd rag-backend```
 
 Create a virtual environment:  
-> python -m venv venv
+```python -m venv venv```
 
 Activate it:  
-> venv\Scripts\activate
+```venv\Scripts\activate```
+
+Install the required dependencies:  
+```pip install -r requirements.txt```
+
+Start the FastAPI server:  
+```uvicorn main:app --reload```
+
+The RAG backend will run at:  
+```http://127.0.0.1:8000```
+
+### 3. Configure the frontend
+
+Navigate to the frontend directory:  
+```cd frontend```
+
+Install dependencies:  
+```npm install```
+
+Start the development server:  
+```npm run dev```
+
+Open the application at:  
+```http://localhost:5173```
