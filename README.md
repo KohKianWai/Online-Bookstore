@@ -6,7 +6,7 @@ The application also integrates an Agentic Retrieval-Augmented Generation (RAG) 
 
 ## Setup
 
-### Run the Spring Boot Backend
+### 1. Run the Spring Boot Backend
 
 Navigate to the backend directory:  
 `cd demo`
@@ -16,3 +16,14 @@ Run the backend:
 
 The Spring Boot API will typically run at:  
 `http://localhost:8080`
+
+### 2. Configure the RAG Backend
+
+Navigate to the RAG directory:  
+> cd rag-backend
+
+Create a virtual environment:  
+> python -m venv venv
+
+Activate it:  
+> venv\Scripts\activate
