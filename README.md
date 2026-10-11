@@ -4,6 +4,10 @@ A full-stack online bookstore application that allows users to browse, purchase,
 
 The application also integrates an Agentic Retrieval-Augmented Generation (RAG) chatbot powered by LangChain, LangGraph, and Pinecone, enabling users to discover books, receive recommendations, and ask questions about book content using natural language.
 
+## Agentic RAG Workflow
+
+![LangGraph Workflow](assets/graph_workflow.png)
+
 ## Setup
 
 ### 1. Run the Spring Boot Backend
