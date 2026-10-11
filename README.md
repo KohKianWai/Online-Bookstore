@@ -8,11 +8,11 @@ The application also integrates an Agentic Retrieval-Augmented Generation (RAG) 
 
 ### Run the Spring Boot Backend
 
-Navigate to the backend directory:
+Navigate to the backend directory:  
 `cd demo`
 
-Run the backend:
+Run the backend:  
 `.\mvnw.cmd spring-boot:run`
 
-The Spring Boot API will typically run at:
+The Spring Boot API will typically run at:  
 `http://localhost:8080`
