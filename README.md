@@ -6,7 +6,7 @@ The application also integrates an Agentic Retrieval-Augmented Generation (RAG) 
 
 ## Agentic RAG Workflow
 
-![LangGraph Workflow](assets/graph_workflow.png)
+![LangGraph Workflow](rag-backend/assets/graph_workflow.png)
 
 ## Setup
 
