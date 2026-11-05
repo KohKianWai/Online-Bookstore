@@ -69,4 +69,8 @@ public class AuthService {
         }
         return null;
     }
+
+    public boolean isUsernameAvailable(String username) {
+        return userDao.getUserByUsername(username) == null && moderatorDao.getModeratorByName(username) == null;
+    }
 }
