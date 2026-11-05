@@ -1,43 +1,23 @@
 from tools import retrieve_by_vector, retrieve_by_author, retrieve_by_category, retrieve_by_title
-from langchain_ollama import ChatOllama, OllamaEmbeddings
 from typing import TypedDict, Annotated
 from langchain_core.messages import AnyMessage, HumanMessage, AIMessage, SystemMessage
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode
 from langgraph.prebuilt import tools_condition
 from langgraph.graph import START, StateGraph
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_nvidia_ai_endpoints import ChatNVIDIA
+from langchain_groq import ChatGroq
 
 import os
 
 # =========================
-# Ollama LLM
+# Groq LLM
 # =========================
 
-# llm = ChatOllama(
-#     model="llama3.1",
-#     temperature=0
-# )
-
-# =========================
-# Gemini LLM
-# =========================
-
-# llm = ChatGoogleGenerativeAI(
-#     model="gemini-3.1-pro-preview",
-#     api_key=os.environ["GOOGLE_API_KEY"],
-#     temperature=0
-# )
-
-# =========================
-# DeepSeek LLM
-# =========================
-
-llm = ChatNVIDIA(
-    model="nvidia/nemotron-3.5-lightning-30b-a3b",
-    api_key=os.environ["NVIDIA_API_KEY"],
+llm = ChatGroq(
+    model="openai/gpt-oss-120b",
+    api_key=os.environ["GROQ_API_KEY"],
     temperature=0,
+    max_tokens=500,
 )
 
 

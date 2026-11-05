@@ -108,9 +108,9 @@ def retrieve_by_vector(query: str, k: int = 5) -> str:
     )
 
     return "\n\n".join([
-            f"title{doc.metadata.get('title')}\n"
-            f"author{doc.metadata.get('author')}\n"
-            f"category: {doc.metadata.get('category')}\n"
-            f"content {doc.page_content}"
+            # f"title: {doc.metadata.get('title')}\n"
+            # f"author: {doc.metadata.get('author')}\n"
+            # f"category: {doc.metadata.get('category')}\n"
+            f"Retrieved content: {doc.page_content}"
             for doc in results
         ])
