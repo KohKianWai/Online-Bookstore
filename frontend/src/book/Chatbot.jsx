@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { environment } from "../environment";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
 
 export default function Chatbot() {
 	const initialMessage = [
@@ -117,13 +118,48 @@ export default function Chatbot() {
 								}`}
 							>
 								<div
-									className={`max-w-[80%] rounded-xl px-4 py-3 text-sm whitespace-pre-line ${
+									className={`max-w-[80%] rounded-xl px-4 py-3 text-sm ${
 										msg.role === "user"
-											? "bg-blue-600 text-white"
+											? "bg-blue-600 text-white whitespace-pre-line"
 											: "bg-gray-100 text-gray-800"
 									}`}
 								>
-									{msg.content}
+									{msg.role === "assistant" ? (
+										<ReactMarkdown
+											components={{
+												ol: ({ node, ...props }) => (
+													<ol
+														style={{
+															listStyleType: "decimal",
+															paddingLeft: "1.25rem",
+															margin: 0
+														}}
+														{...props}
+													/>
+												),
+												ul: ({ node, ...props }) => (
+													<ul
+														style={{
+															listStyleType: "disc",
+															paddingLeft: "1.25rem",
+															margin: 0
+														}}
+														{...props}
+													/>
+												),
+												li: ({ node, ...props }) => (
+													<li style={{ marginBottom: "0.5rem" }} {...props} />
+												),
+												p: ({ node, ...props }) => (
+													<p style={{ margin: 0 }} {...props} />
+												)
+											}}
+										>
+											{msg.content}
+										</ReactMarkdown>
+									) : (
+										msg.content
+									)}
 								</div>
 							</div>
 						))}
